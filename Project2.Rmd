@@ -1,0 +1,84 @@
+
+---
+title: "Test_3"
+author: "Logan Niven 658775739"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    toc: true
+    toc_depth: 2
+    number_sections: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(ggplot2)
+library(knitr)
+```
+
+# Question 1
+
+```{r}
+business_data <- read.csv("D:\\business_performance.csv")
+```
+
+```{r}
+str(business_data)
+```
+
+```{r}
+summary(business_data)
+```
+
+
+```{r}
+Total_Revenue_by_Channel <- aggregate(revenue ~ channel,
+                                      data = business_data,
+                                      sum,
+                                      na.rm = TRUE)
+Total_Revenue_by_Channel
+```
+
+```{r}
+Average_Customers_by_Quarter <- aggregate(customers ~ quarter,
+                                          data = business_data,
+                                          mean,
+                                          na.rm = TRUE)
+Average_Customers_by_Quarter
+```
+
+
+```{r}
+business_data$revenue_per_customer <- business_data$revenue / business_data$customers
+
+Average_Revenue_by_Channel <- aggregate(revenue_per_customer ~ customers,
+                                        data = business_data,
+                                        mean,
+                                        na.rm = TRUE)
+Average_Revenue_by_Channel
+```
+
+# Question 2
+
+```{r}
+channel_totals <- aggregate(revenue ~ channel, data = business_data, sum)
+
+ggplot(channel_totals, aes(x = channel, y = revenue,)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Total Revenue by Channel",
+       x = "Sales Channel", y = "Revenue ($)")
+```
+
+```{r}
+ggplot(business_data, aes(x = customers, y = revenue, colour = channel)) +
+  geom_point(size = 3) +
+  labs(title = "Customer Count vs Revenue by Channel",
+       x = "Number of Customers", y = "Revenue ($)")
+```
+
+[← Back to Projects](projects.html) | [← Back to Home](index.html)
+
+

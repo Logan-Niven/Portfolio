@@ -1,0 +1,146 @@
+
+---
+title: "Test 2"
+author: "Logan Niven 658775739"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    toc: true
+    toc_depth: 2 
+    number_sections: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Data Import and Exploration
+
+## Question 1
+
+```{r}
+# Create sample regional sales data
+regional_sales <- data.frame(
+  region = c("North", "South", "East", "West", "North", "South", "East", "West",
+             "North", "South", "East", "West", "North", "South", "East", 
+             "North", "South","North"),  
+  quarter = c(rep(c("Q1", "Q2", "Q3", "Q4"), each = 4), "Q4", "Q4"),
+  revenue = c(125000, 98000, 115000, 102000, 
+              138000, 105000, 128000, 118000,
+              142000, 89000, 135000, 125000,
+              155000, 112000, 148000, 165000, 
+              120000, 91250),
+  customers = c(450, 380, 420, 395, 
+                485, 415, 465, 445,
+                520, 350, 485, 470,
+                575, 425, 545, 590, 435,324)
+)
+
+```
+
+
+
+```{r}
+str(regional_sales)
+head(regional_sales)
+summary(regional_sales)
+unique(regional_sales)
+```
+
+
+
+```{r}
+sum(regional_sales$customers)
+```
+
+# Data Quality Assessment
+
+## Question 2
+
+```{r}
+sum(is.na(regional_sales))
+```
+
+
+
+```{r}
+table(regional_sales)
+```
+
+
+
+```{r}
+regional_sales[regional_sales$revenue < 90000, ]
+```
+
+
+# Business Logic Analysis
+
+## Question 3
+
+```{r}
+regional_sales[regional_sales$revenue > 140000, ]
+nrow(regional_sales[regional_sales$revenue > 140000, ])
+```
+
+```{r}
+regional_sales[regional_sales$quarter == "Q4" & 
+                 regional_sales$revenue > 130000 & 
+                 regional_sales$customers > 500, ]
+```
+
+```{r}
+regional_sales[regional_sales$region == "North" | 
+                 regional_sales$region == "East", ]
+mean(regional_sales[regional_sales$region == "North" |
+                      regional_sales$region == "East", ])
+
+```
+
+
+
+```{r}
+Poor_Performance <- regional_sales[regional_sales$revenue < "100000" | 
+                 regional_sales$customers < "400", ]
+
+```
+
+
+# Data Aggregation and Business Insights
+
+## Question 4
+
+```{r}
+aggregate(revenue ~ region, data = regional_sales, sum)
+```
+
+```{r}
+aggregate(customers ~ quarter, data = regional_sales, mean)
+```
+
+[← Back to Projects](projects.html) | [← Back to Home](index.html)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
