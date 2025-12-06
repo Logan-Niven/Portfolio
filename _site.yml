@@ -9,5 +9,6 @@ navbar:
       href: about.html
     - text: "Projects"
       href: projects.html
-  output_dir: "docs"
+  output_dir: "docs/"
+
 ---
